@@ -8,12 +8,14 @@ type TaskState = {
 
 type FiltersState = {
   status: "all" | "completed" | "active";
+  searchValue: string;
 };
 
 export type RootStateType = {
   tasks: TaskState;
   filters: FiltersState;
 };
+
 const initialState: RootStateType = {
   tasks: {
     items: [
@@ -26,6 +28,7 @@ const initialState: RootStateType = {
   },
   filters: {
     status: "all",
+    searchValue: "",
   },
 };
 
@@ -43,7 +46,27 @@ const rootReducer = (
     case "task/removeTask":
       return {
         ...state,
-        tasks: { items: [...state.tasks.items] },
+        tasks: {
+          items: [...state.tasks.items].filter(
+            (task) => task.id !== action.payload
+          ),
+        },
+      };
+
+    case "filters/searchTask":
+      return {
+        ...state,
+        filters: { ...state.filters, searchValue: action.payload },
+      };
+
+    case "task/editTask":
+      return {
+        ...state,
+        tasks: {
+          items: [...state.tasks.items].filter(
+            (task) => task.id !== action.payload
+          ),
+        },
       };
 
     default:

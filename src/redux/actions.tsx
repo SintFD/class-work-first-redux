@@ -1,11 +1,10 @@
+import { createAction } from "@reduxjs/toolkit";
 import type { Task } from "./store";
 
-export const addTask = (newTask: Task) => ({
-  type: "task/addTask",
-  payload: newTask,
-});
+export const addTask = createAction<Task>("task/addTask");
 
-export const removeTask = (id: number) => ({
-  type: "task/removeTask",
-  payload: id,
-});
+export const removeTask = createAction<number>("task/removeTask");
+
+export const editTask = createAction<string>("task/editTask");
+
+export const searchTask = createAction<string>("filters/searchTask");
